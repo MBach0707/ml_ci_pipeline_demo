@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - run: pip install -r requirements-dev.txt
+
+      - name: Build image
+        run: docker build -t ml-ci-demo .
+
       - name: Run linter (syntax test)
-        run: ruff check .
+        run: docker run ruff check .
 
 
 
@@ -27,11 +27,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      
-      - run: pip install -r requirements.txt
-      - run: pip install -r requirements-dev.txt
+
+      - name: Build image
+        run: docker build -t ml-ci-demo .
+
       - name: Run pytest
-        run: pytest tests/
+        run: docker run -v $(pwd)/tests:/app/tests ml-ci-demo pytest tests/
