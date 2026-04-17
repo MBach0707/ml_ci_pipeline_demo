@@ -31,4 +31,4 @@ jobs:
         run: docker build -t ml-ci-demo .
 
       - name: Run pytest
-        run: docker run -v $(pwd)/tests:/app/tests ml-ci-demo pytest tests/
+        run: docker run -v $(pwd)/tests:/app/tests -v $(pwd)/conftest.py:/app/conftest.py ml-ci-demo ml-ci-demo pytest tests/
